@@ -35,14 +35,16 @@ class BitprimConsensusConan(ConanFile):
                "fPIC": [True, False],
                "with_tests": [True, False],
                "with_java": [True, False],
-               "with_python": [True, False]
+               "with_python": [True, False],
+               "currency": ['BCH', 'BTC', 'LTC']
     }
 
     default_options = "shared=False", \
         "fPIC=True", \
         "with_tests=False", \
         "with_java=False", \
-        "with_python=False"
+        "with_python=False", \
+        "currency=BCH"
 
     generators = "cmake"
     build_policy = "missing"
@@ -111,6 +113,8 @@ class BitprimConsensusConan(ConanFile):
         cmake.definitions["WITH_JAVA"] = option_on_off(self.options.with_java)
         cmake.definitions["WITH_PYTHON"] = option_on_off(self.options.with_python)
         
+        cmake.definitions["CURRENCY"] = self.options.currency
+
         if self.settings.compiler != "Visual Studio":
             # cmake.definitions["CONAN_CXX_FLAGS"] += " -Wno-deprecated-declarations"
             cmake.definitions["CONAN_CXX_FLAGS"] = cmake.definitions.get("CONAN_CXX_FLAGS", "") + " -Wno-deprecated-declarations"

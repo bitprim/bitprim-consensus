@@ -1,5 +1,6 @@
 import os
 from conan.packager import ConanMultiPackager
+import copy
 
 if __name__ == "__main__":
     builder = ConanMultiPackager(username="bitprim", channel="testing",
@@ -18,7 +19,18 @@ if __name__ == "__main__":
             if os.getenv('BITPRIM_RUN_TESTS', 'false') == 'true':
                 options["bitprim-consensus:with_tests"] = "True"
 
-            filtered_builds.append([settings, options, env_vars, build_requires])
+            # filtered_builds.append([settings, options, env_vars, build_requires])
+            opts_bch = copy.deepcopy(options)
+            opts_btc = copy.deepcopy(options)
+            # opts_ltc = copy.deepcopy(options)
+
+            opts_bch["bitprim-consensus:currency"] = "BCH"
+            opts_btc["bitprim-consensus:currency"] = "BTC"
+            # opts_ltc["bitprim-consensus:currency"] = "LTC"
+
+            filtered_builds.append([settings, opts_bch, env_vars, build_requires])
+            filtered_builds.append([settings, opts_btc, env_vars, build_requires])
+            # filtered_builds.append([settings, opts_ltc, env_vars, build_requires])
 
 
     builder.builds = filtered_builds
