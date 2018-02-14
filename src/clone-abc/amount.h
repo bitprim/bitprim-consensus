@@ -13,6 +13,15 @@
 #include <string>
 #include <type_traits>
 
+#ifdef __GNUC__
+#  include <features.h>
+#  if __GNUC_PREREQ(5,1) //gcc_version >= 4.0
+#    define BITPRIM_DELETED_FRIEND_OK
+#  endif
+#else
+#    define BITPRIM_DELETED_FRIEND_OK
+#endif
+
 struct Amount {
 private:
     int64_t amount;
@@ -120,7 +129,11 @@ public:
      * Do not implement double ops to get an error with double and ensure
      * casting to integer is explicit.
      */
+
+#ifdef BITPRIM_DELETED_FRIEND_OK
     friend constexpr Amount operator*(const double a, const Amount b) = delete;
+#endif
+
     constexpr Amount operator/(const double b) const = delete;
     constexpr Amount operator%(const double b) const = delete;
 
