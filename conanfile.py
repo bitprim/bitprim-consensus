@@ -23,9 +23,24 @@ from conans import ConanFile, CMake
 def option_on_off(option):
     return "ON" if option else "OFF"
 
+def get_content(path):
+    print(os.path.dirname(os.path.abspath(__file__)))
+    print(os.getcwd())
+    with open(path, 'r') as f:
+        return f.read()
+
+def get_version():
+    return get_content('conan_version')
+
+def get_channel():
+    return get_content('conan_channel')
+
 class BitprimConsensusConan(ConanFile):
     name = "bitprim-consensus"
-    version = "0.7"
+
+    # version = "0.7"
+    version = get_version()
+
     license = "http://www.boost.org/users/license.html"
     url = "https://github.com/bitprim/bitprim-consensus"
     description = "Bitcoin Consensus Library"
@@ -48,17 +63,15 @@ class BitprimConsensusConan(ConanFile):
 
     generators = "cmake"
     build_policy = "missing"
+
+    exports = "conan_channel", "conan_version"
     exports_sources = "src/*", "CMakeLists.txt", "cmake/*", "bitprim-consensusConfig.cmake.in", "bitprimbuildinfo.cmake", "include/*", "test/*"
     package_files = "build/lbitprim-consensus.a"
-
-    # requires = (("boost/1.66.0@bitprim/stable"),
-    #             ("secp256k1/0.3@bitprim/testing"),
-    #             ("bitprim-core/0.7@bitprim/testing"))
 
     #TODO(fernando): Add the Boost requirement?
     requires = (("boost/1.66.0@bitprim/stable"),
                 ("secp256k1/0.3@bitprim/testing"),
-                ("bitprim-core/0.7@bitprim/testing"))
+                ("bitprim-core/0.7@bitprim/%s" % get_channel()))
 
 
     @property
@@ -96,7 +109,6 @@ class BitprimConsensusConan(ConanFile):
         if self.settings.compiler == "gcc" or self.settings.compiler == "clang":
             if str(self.settings.compiler.libcxx) == "libstdc++" or str(self.settings.compiler.libcxx) == "libstdc++11":
                 self.info.settings.compiler.libcxx = "ANY"
-        
 
     def build(self):
         cmake = CMake(self)
@@ -139,7 +151,6 @@ class BitprimConsensusConan(ConanFile):
         if self.options.with_tests:
             cmake.test()
             # cmake.test(target="tests")
-        
 
     def imports(self):
         self.copy("*.h", "", "include")
@@ -153,7 +164,6 @@ class BitprimConsensusConan(ConanFile):
         self.copy("*.dylib*", dst="lib", keep_path=False)
         self.copy("*.so", dst="lib", keep_path=False)
         self.copy("*.a", dst="lib", keep_path=False)
-
 
     def package_info(self):
         self.cpp_info.includedirs = ['include']
