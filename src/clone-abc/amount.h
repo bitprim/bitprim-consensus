@@ -13,9 +13,10 @@
 #include <string>
 #include <type_traits>
 
-#ifdef __GNUC__
+// #ifdef __GNUC__
+#if defined(__GLIBC__) || defined(__GNU_LIBRARY__)
 #  include <features.h>
-#  if __GNUC_PREREQ(5,1) //gcc_version >= 4.0
+#  if __GNUC_PREREQ(5,1) //gcc_version >= 5.1
 #    define BITPRIM_DELETED_FRIEND_OK
 #  endif
 #else
