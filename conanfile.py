@@ -71,7 +71,7 @@ class BitprimConsensusConan(ConanFile):
     #TODO(fernando): Add the Boost requirement?
     requires = (("boost/1.66.0@bitprim/stable"),
                 ("secp256k1/0.3@bitprim/testing"),
-                ("bitprim-core/0.7@bitprim/%s" % get_channel()))
+                ("bitprim-core/0.8@bitprim/%s" % get_channel()))
 
 
     @property
