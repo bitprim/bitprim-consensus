@@ -97,6 +97,7 @@ else()
   message(FATAL_ERROR "Invalid Cryptocurrency: ${CURRENCY}")
 endif()
 
+message( STATUS "Bitprim Currency: ${CURRENCY}")
 
 
 # Set preprocessor defines.
@@ -354,6 +355,8 @@ endif()
 
 #------------------------------------------------------------------------------
 if (${CURRENCY} STREQUAL "BCH")
+#message("clone BCH")
+
   add_library(bitprim-consensus-clone OBJECT
     src/clone-abc/amount.h
     src/clone-abc/amount.cpp
@@ -390,7 +393,10 @@ if (${CURRENCY} STREQUAL "BCH")
     src/clone-abc/script/script.h
     src/clone-abc/script/script_error.h
   )
+
 else()
+#message("clone BTC")
+
   add_library(bitprim-consensus-clone OBJECT
     src/clone-legacy/amount.h
     src/clone-legacy/hash.cpp
@@ -437,8 +443,10 @@ endif(ENABLE_POSITION_INDEPENDENT_CODE)
 
 
 if (${CURRENCY} STREQUAL "BCH")
+#message("clone BCH 2")
   target_include_directories(bitprim-consensus-clone PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src/clone-abc)
 else()
+#message("clone BTC 2")
   target_include_directories(bitprim-consensus-clone PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src/clone-legacy)
 endif()
 
@@ -454,9 +462,13 @@ if (NOT USE_CONAN)
 endif()
 
 if (${CURRENCY} STREQUAL "BCH")
+#message("clone BCH 3")
+
   _group_sources(bitprim-consensus-clone "${CMAKE_CURRENT_SOURCE_DIR}/src/clone-abc")
 else()
-  _group_sources(bitprim-consensus-clone "${CMAKE_CURRENT_SOURCE_DIR}/src/clone-legacy")
+#message("clone BTC 3")
+
+_group_sources(bitprim-consensus-clone "${CMAKE_CURRENT_SOURCE_DIR}/src/clone-legacy")
 endif()
 
 
@@ -493,13 +505,17 @@ endif()
 
 
 if (${CURRENCY} STREQUAL "BCH")
+#message("clone BCH 4")
+
   target_include_directories(bitprim-consensus PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/src
     ${CMAKE_CURRENT_SOURCE_DIR}/src/clone-abc)
 else()
+#message("clone BTC 4")
+
   target_include_directories(bitprim-consensus PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}/src
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/clone-legacy)
+      ${CMAKE_CURRENT_SOURCE_DIR}/src
+      ${CMAKE_CURRENT_SOURCE_DIR}/src/clone-legacy)
 endif()
 
 
@@ -530,22 +546,25 @@ endif()
 if (WITH_TESTS)
  
   add_executable(bitprim_consensus_test
-    test/consensus__script_error_to_verify_result.cpp
+    # test/consensus__script_error_to_verify_result.cpp
     test/consensus__script_verify.cpp
-    test/consensus__verify_flags_to_script_flags.cpp
+    # test/consensus__verify_flags_to_script_flags.cpp
     test/main.cpp
     test/script.hpp)
  
  
 
   if (${CURRENCY} STREQUAL "BCH")
+  #message("clone BCH 5")
+
     target_include_directories(bitprim_consensus_test PRIVATE
       ${CMAKE_CURRENT_SOURCE_DIR}/src
       ${CMAKE_CURRENT_SOURCE_DIR}/src/clone-abc)
   else()
+  #message("clone BTC 5")
     target_include_directories(bitprim_consensus_test PRIVATE
-      ${CMAKE_CURRENT_SOURCE_DIR}/src
-      ${CMAKE_CURRENT_SOURCE_DIR}/src/clone-legacy)
+        ${CMAKE_CURRENT_SOURCE_DIR}/src
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/clone-legacy)
   endif()
   
 

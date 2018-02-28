@@ -19,9 +19,14 @@
 #  if __GNUC_PREREQ(5,1) //gcc_version >= 5.1
 #    define BITPRIM_DELETED_FRIEND_OK
 #  endif
+#elif defined(__MINGW32__)
+#  if GCC_VERSION >= 50100
+#    define BITPRIM_DELETED_FRIEND_OK
+#  endif
 #else
 #    define BITPRIM_DELETED_FRIEND_OK
 #endif
+
 
 struct Amount {
 private:

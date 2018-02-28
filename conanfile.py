@@ -23,10 +23,12 @@ from conans import ConanFile, CMake
 def option_on_off(option):
     return "ON" if option else "OFF"
 
-def get_content(path):
-    print(os.path.dirname(os.path.abspath(__file__)))
-    print(os.getcwd())
-    with open(path, 'r') as f:
+def get_content(file_name):
+    # print(os.path.dirname(os.path.abspath(__file__)))
+    # print(os.getcwd())
+    # print(file_name)
+    file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), file_name)
+    with open(file_path, 'r') as f:
         return f.read()
 
 def get_version():
@@ -124,7 +126,9 @@ class BitprimConsensusConan(ConanFile):
         cmake.definitions["WITH_TESTS"] = option_on_off(self.options.with_tests)
         cmake.definitions["WITH_JAVA"] = option_on_off(self.options.with_java)
         cmake.definitions["WITH_PYTHON"] = option_on_off(self.options.with_python)
-        
+
+        # print("self.options.currency")
+        # print(self.options.currency)
         cmake.definitions["CURRENCY"] = self.options.currency
 
         if self.settings.compiler != "Visual Studio":

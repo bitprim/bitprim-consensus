@@ -24,7 +24,12 @@
 #include <vector>
 #include <bitcoin/consensus.hpp>
 #include <boost/test/unit_test.hpp>
-#include <clone/script/interpreter.h>
+
+#ifdef BITPRIM_CURRENCY_BCH
+#include <clone-abc/script/interpreter.h>
+#else // BITPRIM_CURRENCY_BCH
+#include <clone-legacy/script/interpreter.h>
+#endif // BITPRIM_CURRENCY_BCH
 
 BOOST_AUTO_TEST_SUITE(consensus__script_verify)
 
