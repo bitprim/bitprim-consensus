@@ -212,6 +212,14 @@ typedef enum verify_flags_type
      * SCRIPT_VERIFY_WITNESS_PUBKEYTYPE (bip141/bip143 p2wsh/p2wpkh policy).
      */
     verify_flags_witness_public_key_compressed = (1U << 15)
+
+#ifdef BITPRIM_CURRENCY_BCH
+    /**
+     * SCRIPT_ENABLE_SIGHASH_FORKID (bitcoin-cash).
+     */
+    , verify_flags_script_enable_sighash_forkid = (1U << 16)
+#endif
+
 } verify_flags;
 
 /**

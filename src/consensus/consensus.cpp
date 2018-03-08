@@ -240,6 +240,11 @@ unsigned int verify_flags_to_script_flags(unsigned int flags)
         script_flags |= SCRIPT_VERIFY_WITNESS_PUBKEYTYPE;
 #endif //BITPRIM_CURRENCY_BCH
 
+#ifdef BITPRIM_CURRENCY_BCH
+    if ((flags & verify_flags_script_enable_sighash_forkid) != 0)
+        script_flags |= SCRIPT_ENABLE_SIGHASH_FORKID;
+#endif
+
     return script_flags;
 }
 
