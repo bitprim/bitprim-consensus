@@ -97,7 +97,7 @@ else()
   message(FATAL_ERROR "Invalid Cryptocurrency: ${CURRENCY}")
 endif()
 
-message( STATUS "Bitprim Currency: ${CURRENCY}")
+message(STATUS "Bitprim: Cryptocurrency: ${CURRENCY}")
 
 
 # Set preprocessor defines.
