@@ -72,7 +72,7 @@ class BitprimConsensusConan(ConanFile):
     generators = "cmake"
     build_policy = "missing"
 
-    exports = "conan_channel", "conan_version"
+    exports = "conan_channel", "conan_version", "conan_req_version"
     exports_sources = "src/*", "CMakeLists.txt", "cmake/*", "bitprim-consensusConfig.cmake.in", "bitprimbuildinfo.cmake", "include/*", "test/*"
     package_files = "build/lbitprim-consensus.a"
 
