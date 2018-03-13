@@ -19,6 +19,9 @@
 
 import os
 from conans import ConanFile, CMake
+from conans import __version__ as conan_version
+from conans.model.version import Version
+
 
 def option_on_off(option):
     return "ON" if option else "OFF"
@@ -37,16 +40,19 @@ def get_version():
 def get_channel():
     return get_content('conan_channel')
 
+def get_conan_req_version():
+    return get_content('conan_req_version')
+
 class BitprimConsensusConan(ConanFile):
     name = "bitprim-consensus"
-
-    # version = "0.7"
     version = get_version()
-
     license = "http://www.boost.org/users/license.html"
     url = "https://github.com/bitprim/bitprim-consensus"
     description = "Bitcoin Consensus Library"
     settings = "os", "compiler", "build_type", "arch"
+
+    if conan_version < Version(get_conan_req_version()):
+        raise Exception ("Conan version should be greater or equal than %s" % (get_conan_req_version(), ))
 
     options = {"shared": [True, False],
                "fPIC": [True, False],
@@ -70,11 +76,9 @@ class BitprimConsensusConan(ConanFile):
     exports_sources = "src/*", "CMakeLists.txt", "cmake/*", "bitprim-consensusConfig.cmake.in", "bitprimbuildinfo.cmake", "include/*", "test/*"
     package_files = "build/lbitprim-consensus.a"
 
-    #TODO(fernando): Add the Boost requirement?
     requires = (("boost/1.66.0@bitprim/stable"),
                 ("secp256k1/0.3@bitprim/%s" % get_channel()),
                 ("bitprim-core/0.8@bitprim/%s" % get_channel()))
-
 
     @property
     def msvc_mt_build(self):
