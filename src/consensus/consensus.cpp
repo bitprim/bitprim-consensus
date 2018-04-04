@@ -243,6 +243,12 @@ unsigned int verify_flags_to_script_flags(unsigned int flags)
 #ifdef BITPRIM_CURRENCY_BCH
     if ((flags & verify_flags_script_enable_sighash_forkid) != 0)
         script_flags |= SCRIPT_ENABLE_SIGHASH_FORKID;
+
+    if ((flags & verify_flags_script_enable_replay_protection) != 0)
+        script_flags |= SCRIPT_ENABLE_REPLAY_PROTECTION;
+
+    if ((flags & verify_flags_script_enable_monolith_opcodes) != 0)
+        script_flags |= SCRIPT_ENABLE_MONOLITH_OPCODES;
 #endif
 
     return script_flags;
