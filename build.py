@@ -22,7 +22,6 @@ if __name__ == "__main__":
 
             if os.getenv('BITPRIM_RUN_TESTS', 'false') == 'true':
                 options["%s:with_tests" % name] = "True"
-                options["%s:with_examples" % name] = "True"
                 marchs = ["x86-64"]
             else:
                 if full_build:
