@@ -53,6 +53,7 @@ option(ENABLE_POSITION_INDEPENDENT_CODE "Enable POSITION_INDEPENDENT_CODE proper
 
 # Process options.
 #==============================================================================
+
 # Implement --with-tests and declare WITH_TESTS.
 #------------------------------------------------------------------------------
 option(WITH_TESTS "Compile with unit tests." ON)
@@ -81,6 +82,10 @@ set(BITPRIM_PROJECT_VERSION "-" CACHE STRING "Specify the Bitprim Project Versio
 # message(${BITPRIM_PROJECT_VERSION})
 
 
+set(MICROARCHITECTURE "x86_64" CACHE STRING "Specify the Cryptocurrency (x86_64|...).")
+message( STATUS "Bitprim: Compiling for ${MICROARCHITECTURE}")
+# add_definitions(-DBITPRIM_MICROARCHITECTURE=${MICROARCHITECTURE})
+# add_definitions(-DBITPRIM_MICROARCHITECTURE_STR="${MICROARCHITECTURE}")
 
 
 set(CURRENCY "BCH" CACHE STRING "Specify the Cryptocurrency (BCH|BTC|LTC).")
@@ -255,11 +260,6 @@ if (NO_CONAN_AT_ALL)
   endif()
 endif()
 
-# if (UNIX)
-#   set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} "/usr/local/lib/cmake")
-# elseif (WIN32)
-#   set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} "cmake")
-# endif()
 
 # message("FER-USE_CONAN")
 # message(${USE_CONAN})
