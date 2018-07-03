@@ -4,8 +4,8 @@
 //        GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY
 //
 ///////////////////////////////////////////////////////////////////////////////
-#ifndef LIBBITCOIN_CONSENSUS_VERSION_HPP
-#define LIBBITCOIN_CONSENSUS_VERSION_HPP
+#ifndef LIBBITCOIN_CONSENSUS_VERSION_HPP_
+#define LIBBITCOIN_CONSENSUS_VERSION_HPP_
 
 /**
  * The semantic version of this repository as: [major].[minor].[patch]
@@ -17,11 +17,6 @@
 #define LIBBITCOIN_CONSENSUS_MINOR_VERSION 11
 #define LIBBITCOIN_CONSENSUS_PATCH_VERSION 0
 
-// #define STR_HELPER(x) #x
-// #define STR(x) STR_HELPER(x)
-// #define LIBBITCOIN_CONSENSUS_VERSION STR(LIBBITCOIN_CONSENSUS_MAJOR_VERSION) "." STR(LIBBITCOIN_CONSENSUS_MINOR_VERSION) "." STR(LIBBITCOIN_CONSENSUS_PATCH_VERSION)
-// #undef STR
-// #undef STR_HELPER
 
 #ifdef BITPRIM_BUILD_NUMBER
 #define BITPRIM_CONSENSUS_VERSION BITPRIM_BUILD_NUMBER
@@ -34,4 +29,4 @@
 // }} /*namespace libbitcoin::????????*/
  
 
-#endif
+#endif //LIBBITCOIN_CONSENSUS_VERSION_HPP_

@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2017 Bitprim developers (see AUTHORS)
+# Copyright (c) 2017-2018 Bitprim Inc.
 #
 # This file is part of Bitprim.
 #
@@ -22,8 +22,9 @@ cmake_minimum_required(VERSION 3.4)
 # bitprim-consensus
 #==============================================================================
 project(bitprim-consensus
-  VERSION 0.11.0
+  VERSION 0
   LANGUAGES CXX C)
+  # VERSION 0.11.0
 
 # if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
 #   if (NOT NOT_USE_CPP11_ABI)
@@ -274,16 +275,16 @@ endif()
 
 if (NOT USE_CONAN)
 #   message("Entro!!!")
-  # Require bitprim-core of at least version 0.11.0 and output ${bitprim_core_CPPFLAGS/LIBS/PKG}.
+  # Require bitprim-core of at least version 0 and output ${bitprim_core_CPPFLAGS/LIBS/PKG}.
   #------------------------------------------------------------------------------
   if (NOT TARGET bitprim-core)
-    find_package(bitprim-core 0.11.0 REQUIRED)
+    find_package(bitprim-core 0 REQUIRED)
   endif()
 
-  # Require secp256k1 of at least version 0.3.0 and output ${secp256k1_CPPFLAGS/LIBS/PKG}.
+  # Require secp256k1 of at least version 0 and output ${secp256k1_CPPFLAGS/LIBS/PKG}.
   #------------------------------------------------------------------------------
   if (NOT TARGET secp256k1)
-    find_package(secp256k1 0.3.0 REQUIRED)
+    find_package(secp256k1 0 REQUIRED)
   endif()
 endif (NOT USE_CONAN)
 
