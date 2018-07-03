@@ -41,7 +41,7 @@ curl -s -d "$body" -X POST \
 body="{
     \"request\": {
     \"branch\":\"${BITPRIM_PUSH_BRANCH}\",
-    \"message\": \"Force by bitprim-core build: ${TRAVIS_BUILD_NUMBER}\"
+    \"message\": \"Force by bitprim-consensus build: ${TRAVIS_BUILD_NUMBER}\"
 }}"
 
 curl -s -X POST \

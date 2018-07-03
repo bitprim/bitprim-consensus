@@ -26,14 +26,6 @@ project(bitprim-consensus
   LANGUAGES CXX C)
   # VERSION 0.11.0
 
-# if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-#   if (NOT NOT_USE_CPP11_ABI)
-#     add_definitions(-D_GLIBCXX_USE_CXX11_ABI=1)
-#   else()
-#     add_definitions(-D_GLIBCXX_USE_CXX11_ABI=0)
-#   endif()
-#   set(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -Wno-macro-redefined")
-# endif()
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
@@ -85,6 +77,11 @@ endif()
 
 set(BITPRIM_BUILD_NUMBER "-" CACHE STRING "Specify the Bitprim Build Number.")
 # message(${BITPRIM_BUILD_NUMBER})
+set(BITPRIM_PROJECT_VERSION "-" CACHE STRING "Specify the Bitprim Project Version.")
+# message(${BITPRIM_PROJECT_VERSION})
+
+
+
 
 set(CURRENCY "BCH" CACHE STRING "Specify the Cryptocurrency (BCH|BTC|LTC).")
 
@@ -107,7 +104,9 @@ include(CheckCXXSymbolExists)
 
 # Including common functions
 #------------------------------------------------------------------------------
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
+#set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/ci_utils/cmake)
+
 include(BitprimTools)
 
 
@@ -225,17 +224,9 @@ _check_has_decl(sys/endian.h HAVE_SYS_ENDIAN_H htobe64 HAVE_DECL_HTOBE64)
 #==============================================================================
 # Only if enabled
 #------------------------------------------------------------------------------
-# if (NOT NO_CONAN_AT_ALL)
-#   if(EXISTS ${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
-#       include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
-#       conan_basic_setup()
-#   else()
-#       message(WARNING "The file conanbuildinfo.cmake doesn't exist, you have to run conan install first")
-#   endif()
-# endif()
 
-if (EXISTS ${CMAKE_SOURCE_DIR}/bitprimbuildinfo.cmake)
-    include(${CMAKE_SOURCE_DIR}/bitprimbuildinfo.cmake)
+if(EXISTS ${CMAKE_SOURCE_DIR}/ci_utils/cmake/bitprimbuildinfo.cmake)
+    include(${CMAKE_SOURCE_DIR}/ci_utils/cmake/bitprimbuildinfo.cmake)
 else()
     message( STATUS "bitprimbuildinfo doent exists")
 endif()
@@ -452,6 +443,7 @@ else()
 endif()
 
 target_compile_definitions(bitprim-consensus-clone PUBLIC -DBITPRIM_BUILD_NUMBER="\\"${BITPRIM_BUILD_NUMBER}\\"")
+target_compile_definitions(bitprim-consensus-clone PUBLIC -DBITPRIM_PROJECT_VERSION="\\"${BITPRIM_PROJECT_VERSION}\\"") #TODO(fernando): manage with Conan????
   
 
 if (NOT USE_CONAN)
@@ -497,6 +489,8 @@ target_include_directories(bitprim-consensus PUBLIC
   $<INSTALL_INTERFACE:include>)
 
 target_compile_definitions(bitprim-consensus PUBLIC -DBITPRIM_BUILD_NUMBER="\\"${BITPRIM_BUILD_NUMBER}\\"")
+target_compile_definitions(bitprim-consensus PUBLIC -DBITPRIM_PROJECT_VERSION="\\"${BITPRIM_PROJECT_VERSION}\\"") #TODO(fernando): manage with Conan????
+
 
 if (NOT ENABLE_SHARED)
   target_compile_definitions(bitprim-consensus PUBLIC -DBCK_STATIC)
