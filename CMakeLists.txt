@@ -76,8 +76,6 @@ endif()
 
 
 
-set(BITPRIM_BUILD_NUMBER "-" CACHE STRING "Specify the Bitprim Build Number.")
-# message(${BITPRIM_BUILD_NUMBER})
 set(BITPRIM_PROJECT_VERSION "-" CACHE STRING "Specify the Bitprim Project Version.")
 # message(${BITPRIM_PROJECT_VERSION})
 
@@ -441,7 +439,6 @@ else()
   target_include_directories(bitprim-consensus-clone PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src/clone-legacy)
 endif()
 
-target_compile_definitions(bitprim-consensus-clone PUBLIC -DBITPRIM_BUILD_NUMBER="\\"${BITPRIM_BUILD_NUMBER}\\"")
 target_compile_definitions(bitprim-consensus-clone PUBLIC -DBITPRIM_PROJECT_VERSION="\\"${BITPRIM_PROJECT_VERSION}\\"") #TODO(fernando): manage with Conan????
   
 
@@ -487,7 +484,6 @@ target_include_directories(bitprim-consensus PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
 
-target_compile_definitions(bitprim-consensus PUBLIC -DBITPRIM_BUILD_NUMBER="\\"${BITPRIM_BUILD_NUMBER}\\"")
 target_compile_definitions(bitprim-consensus PUBLIC -DBITPRIM_PROJECT_VERSION="\\"${BITPRIM_PROJECT_VERSION}\\"") #TODO(fernando): manage with Conan????
 
 
