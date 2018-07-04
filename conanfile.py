@@ -107,6 +107,9 @@ class BitprimConsensusConan(ConanFile):
             march_conan_manip(self)
             self.options["*"].microarchitecture = self.options.microarchitecture
 
+        self.options["*"].currency = self.options.currency
+        self.output.info("Compiling for currency: %s" % (self.options.currency,))
+
     def package_id(self):
         self.info.options.with_tests = "ANY"
         self.info.options.with_java = "ANY"
